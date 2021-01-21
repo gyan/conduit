@@ -1,8 +1,6 @@
 package pendulum // called the package pendulum cause "intervals"
 
 import (
-	"context"
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,8 +11,6 @@ import (
 	"github.com/yolobus/kuber/config"
 	"go.uber.org/cadence/worker"
 	"go.uber.org/zap"
-
-	_ "github.com/joho/godotenv/autoload"
 
 	ca "github.com/yolobus/kuber/common/cadence"
 )
@@ -61,12 +57,6 @@ func (w *Worker) Init(tasklist, verbose, workerType string) {
 	}
 
 	if workerType == "activity" {
-		fmt.Println("activity")
-
-		ctx := context.Background()
-		ctx = context.WithValue(ctx, "cadenceClient", w.cadenceAdapter)
-
-		workerOptions.BackgroundActivityContext = ctx
 		workerOptions.EnableSessionWorker = true
 		workerOptions.DisableWorkflowWorker = true
 		workerOptions.DisableActivityWorker = false
